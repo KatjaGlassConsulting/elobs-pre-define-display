@@ -1,0 +1,14 @@
+{
+  "ElobsPreDefineDisplay": {
+    "menu_label": "ELOBS Pre-Define Viewer",
+    "title": "ELOBS Pre-Define Viewer",
+    "description": "Extension: View predefined display data from OpenStudyBuilder.",
+    "loading": "Loading...",
+    "error_message": "An error occurred while loading data from the extension.",
+    "studies_title": "Studies",
+    "col_study_id": "Study ID",
+    "col_acronym": "Acronym",
+    "col_uid": "UID",
+    "no_studies": "No studies found."
+  }
+}
