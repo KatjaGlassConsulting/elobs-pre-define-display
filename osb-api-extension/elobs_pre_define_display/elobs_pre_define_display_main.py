@@ -1,14 +1,23 @@
 from __future__ import annotations
 import logging
-from fastapi import APIRouter
+from typing import Any
+from fastapi import APIRouter, Query
+
+# Sibling imports MUST use the top-level fallback: the OSB loader imports this file
+# as a top-level module (no parent package), so plain relative imports would raise
+# and 502 the whole extensions API. See the design spec's loader-contract section.
 try:
-    from .models import StudySummary  # package import (tests)
+    from .models import Standard  # package import (tests)
 except ImportError:
-    from models import StudySummary  # top-level import (OSB extensions loader)
+    from models import Standard  # top-level import (OSB extensions loader)
 try:
-    from .osb_direct_client import OsbDirectClient  # package import (tests)
+    from .osb_direct_client import OsbDirectClient
 except ImportError:
-    from osb_direct_client import OsbDirectClient  # top-level import (OSB extensions loader)
+    from osb_direct_client import OsbDirectClient
+try:
+    from .predefine_repository import get_datasets, get_variables
+except ImportError:
+    from predefine_repository import get_datasets, get_variables
 
 log = logging.getLogger(__name__)
 
@@ -18,23 +27,38 @@ router = APIRouter(
 
 
 @router.get(
-    "/hello",
-    summary="Dummy greeting endpoint",
-    response_description="A static greeting message",
+    "/standards",
+    summary="List sponsor models (standards)",
+    response_description="Sponsor models with their extended CDISC IG",
+    response_model=list[Standard],
 )
-async def hello() -> dict[str, str]:
-    """Return a static greeting. Placeholder for the first walking skeleton."""
-    return {"message": "hallo world"}
+def list_standards() -> list[dict[str, Any]]:
+    """Panel 3 — sponsor models joined with their extended IG's date + version."""
+    return OsbDirectClient().get_standards()
 
 
 @router.get(
-    "/studies",
-    summary="List studies",
-    response_description="Study summaries (uid, study_id, acronym) from OpenStudyBuilder",
-    response_model=list[StudySummary],
+    "/studies/{uid}/datasets",
+    summary="List datasets (domains) for a study",
+    response_description="Domains used by the study's activities for the given standard",
 )
-async def list_studies() -> list[StudySummary]:
-    """Return a minimal summary of every study, read directly from OSB in-process."""
-    client = OsbDirectClient()
-    studies = await client.get_studies()
-    return [StudySummary(**s) for s in studies]
+def list_datasets(
+    uid: str,
+    sponsor_model: str = Query(..., description="Sponsor model name"),
+    version: str | None = Query(None, description="Study version. Omit for latest."),
+) -> list[dict[str, Any]]:
+    """Panel 4 — datasets used by the study, version-aware, for the selected standard."""
+    return get_datasets(uid, sponsor_model=sponsor_model, version=version or None)
+
+
+@router.get(
+    "/datasets/{dataset}/variables",
+    summary="List variables of a dataset",
+    response_description="Dataset variables as defined by the sponsor model",
+)
+def list_variables(
+    dataset: str,
+    sponsor_model: str = Query(..., description="Sponsor model name"),
+) -> list[dict[str, Any]]:
+    """Panel 5 — variables of a dataset as defined by the sponsor model."""
+    return get_variables(dataset, sponsor_model=sponsor_model)

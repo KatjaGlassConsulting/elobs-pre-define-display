@@ -2,13 +2,23 @@
   "ElobsPreDefineDisplay": {
     "menu_label": "ELOBS Pre-Define Viewer",
     "title": "ELOBS Pre-Define Viewer",
-    "description": "Extension: View predefined display data from OpenStudyBuilder.",
-    "loading": "Loading...",
+    "description": "Extension: View a study's Pre-Define (define.xml style) datasets and variables from OpenStudyBuilder.",
+    "study_label": "Study",
+    "study_placeholder": "Select a study",
+    "version_label": "Version",
+    "version_latest": "Latest",
+    "metadata_title": "Study metadata",
+    "meta_study_name": "Study name",
+    "meta_study_description": "Study description",
+    "meta_protocol_name": "Protocol name",
+    "meta_version": "Version",
+    "standard_label": "Standard (sponsor model)",
+    "standard_placeholder": "Select a standard",
+    "datasets_title": "Datasets",
+    "datasets_hint": "Select a study and a standard to list datasets. Click a row to view its variables.",
+    "variables_title": "Variables",
+    "variables_hint": "Select a dataset above to view its variables.",
     "error_message": "An error occurred while loading data from the extension.",
-    "studies_title": "Studies",
-    "col_study_id": "Study ID",
-    "col_acronym": "Acronym",
-    "col_uid": "UID",
-    "no_studies": "No studies found."
+    "no_rows": "No data."
   }
 }

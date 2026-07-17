@@ -1,11 +1,12 @@
 from __future__ import annotations
-from typing import Optional
+from typing import Any, Optional
 from pydantic import BaseModel, Field
 
 
-class StudySummary(BaseModel):
-    """A minimal, display-oriented summary of an OpenStudyBuilder study."""
+class Standard(BaseModel):
+    """A sponsor model and the CDISC Implementation Guide it extends (panel 3)."""
 
-    uid: str = Field(..., description="OpenStudyBuilder study UID (e.g. Study_000001)")
-    study_id: Optional[str] = Field(None, description="Human-readable study identifier")
-    acronym: Optional[str] = Field(None, description="Study acronym, if defined")
+    sponsor_model: str = Field(..., description="Sponsor model name (selection value)")
+    cdisc_ig: Optional[str] = Field(None, description="Extended CDISC IG name")
+    effective_date: Optional[Any] = Field(None, description="Extended IG effective date")
+    version: Optional[str] = Field(None, description="Extended IG version number")

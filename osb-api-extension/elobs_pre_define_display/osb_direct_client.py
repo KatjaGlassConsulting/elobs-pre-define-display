@@ -1,3 +1,9 @@
+"""In-process reads from OSB service classes (no HTTP).
+
+Currently backs the Standards panel (sponsor models + the CDISC IG they extend).
+All clinical_mdr_api imports are deferred to method bodies so this module imports
+cleanly in the isolated unit-test environment.
+"""
 from contextlib import contextmanager
 from typing import Any
 
@@ -31,32 +37,40 @@ def _system_user_context():
             pass
 
 
-def _summarize_study(study: dict[str, Any]) -> dict[str, Any]:
-    """Reduce a full OSB study dict to the fields the viewer displays.
+def _build_standards(sponsor_models: list[Any], igs: list[Any]) -> list[dict[str, Any]]:
+    """Join each sponsor model with its extended IG's effective date + version.
 
-    Reads defensively so a missing metadata branch yields None rather than raising.
+    Pure mapping (no service calls) so it is unit-testable without OSB. IG lookup is
+    by name; a missing IG yields null metadata rather than raising.
     """
-    identification = (
-        (study.get("current_metadata") or {}).get("identification_metadata") or {}
-    )
-    return {
-        "uid": study.get("uid"),
-        "study_id": identification.get("study_id"),
-        "acronym": identification.get("study_acronym"),
-    }
+    ig_by_name = {ig.name: ig for ig in igs}
+    result = []
+    for sm in sponsor_models:
+        ig = ig_by_name.get(sm.extended_implementation_guide)
+        result.append(
+            {
+                "sponsor_model": sm.name,
+                "cdisc_ig": sm.extended_implementation_guide,
+                "effective_date": getattr(ig, "start_date", None) if ig else None,
+                "version": getattr(ig, "version_number", None) if ig else None,
+            }
+        )
+    return result
 
 
 class OsbDirectClient:
-    """Calls OSB service classes directly instead of making HTTP requests.
+    """Calls OSB service classes directly instead of making HTTP requests."""
 
-    All clinical_mdr_api imports are deferred to method bodies so this module can be
-    imported in environments where clinical_mdr_api is not installed (e.g. the
-    isolated unit tests in this repo).
-    """
+    def get_standards(self) -> list[dict[str, Any]]:
+        """Return sponsor models enriched with their extended IG metadata."""
+        from clinical_mdr_api.services.standard_data_models.sponsor_model import (
+            SponsorModelService,
+        )
+        from clinical_mdr_api.services.standard_data_models.data_model_ig import (
+            DataModelIGService,
+        )
 
-    async def get_studies(self, page_size: int = 0) -> list[dict[str, Any]]:
-        """Return a normalized summary (uid, study_id, acronym) for every study."""
-        from clinical_mdr_api.services.studies.study import StudyService
         with _system_user_context():
-            result = StudyService().get_all(page_size=page_size)
-        return [_summarize_study(item.model_dump()) for item in result.items]
+            sponsor_models = SponsorModelService().get_all_items(page_size=0).items
+            igs = DataModelIGService().get_all_items(page_size=0).items
+        return _build_standards(sponsor_models, igs)

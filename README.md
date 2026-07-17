@@ -56,11 +56,14 @@ osb-frontend-extension   →   osb-api-extension   →   OpenStudyBuilder servic
 
 ## Endpoints
 
+The extension reproduces panels 3–5 of the OSB NeoDash "Pre-Define" report. Panels
+1–2 (study list, versions, metadata) use native OSB endpoints from the frontend.
+
 | Method & path | Purpose |
 |---|---|
-| `GET /elobs-pre-define-display/hello` | Walking-skeleton smoke test — returns `{ "message": "hallo world" }`. |
-| `GET /elobs-pre-define-display/studies` | List study summaries (`uid`, `study_id`, `acronym`). |
-| _[TODO: add the predefined-display endpoint(s) here as they are implemented]_ | |
+| `GET /elobs-pre-define-display/standards` | Sponsor models + extended CDISC IG (panel 3). |
+| `GET /elobs-pre-define-display/studies/{uid}/datasets?sponsor_model=&version=` | Datasets/domains used by the study, version-aware (panel 4). |
+| `GET /elobs-pre-define-display/datasets/{dataset}/variables?sponsor_model=` | Dataset variables from the sponsor model (panel 5). |
 
 ---
 

@@ -14,6 +14,72 @@ It is modelled on the existing `elobs-word-updater` extension
 but is deliberately simpler: **no reusable `core` Python package, no file upload,
 no document generation, no downloads.** It reads from OSB and renders.
 
+## Pre-Define feature (concrete scope)
+
+The viewer reproduces the OSB **NeoDash "Pre-Define" report**
+(`neo4j-mdr-db/neodash/neodash_reports/pre_define.json`), panels 1–5. The
+"Codelist/Terms" panel (panel 6) is explicitly out of scope.
+
+Report flow: **study → version → standard → dataset → variables**.
+
+### Data-access strategy (hybrid, all in-process — no HTTP)
+
+| Panel | Data | Mechanism |
+|---|---|---|
+| 1 Study list | studies | **native OSB** `/studies/list` (frontend `repository`) |
+| — Versions | study versions | **native OSB** `/studies/{uid}/snapshot-history` |
+| 2 Study metadata | name / description / protocol / version | **native OSB** `/studies/{uid}?study_value_version=` |
+| 3 Standards | sponsor models + extended IG | **extension** — in-process `SponsorModelService.get_all_items(page_size=0)` joined by name with `DataModelIGService.get_all_items()` for IG effective_date + version |
+| 4 Datasets | domains used by the study's activities | **extension** — Cypher via `neomodel db.cypher_query`, version-aware |
+| 5 Variables | dataset variables from the sponsor model | **extension** — Cypher via `neomodel db.cypher_query` |
+
+Panels 1–2 reuse native OSB endpoints from the frontend (the word-updater pattern),
+so the extension is not re-implementing study reads. The extension owns only
+standards + datasets + variables.
+
+Panel 5 (variables) is driven by the **sponsor model + dataset**, not the study, so
+study-version has no effect on it — inherent to the graph, not a shortcut.
+
+### Version-awareness
+
+Study selection is keyed by `StudyRoot.uid` + `study_value_version` (like
+word-updater). The two study-dependent Cypher queries (panels 2-equivalent metadata
+is native; **panel 4 datasets** is the Cypher one) build the study match dynamically:
+
+```cypher
+-- latest:
+MATCH (sr:StudyRoot {uid:$uid})-[:LATEST]->(sv:StudyValue)
+-- specific version:
+MATCH (sr:StudyRoot {uid:$uid})-[hv:HAS_VERSION {version:$version}]->(sv:StudyValue)
+```
+
+`HAS_VERSION` carries `version` (string), `status` (DRAFT/RELEASED/LOCKED),
+`start_date`. Keying on `uid` avoids any `uid`↔`study_number` mapping.
+
+### Extension endpoints
+
+| Endpoint | Returns |
+|---|---|
+| `GET /standards` | `[{sponsor_model, cdisc_ig, effective_date, version}]` |
+| `GET /studies/{uid}/datasets?sponsor_model=&version=` | `[{dataset, description, class, structure, purpose, keys, documentation, location}]` |
+| `GET /datasets/{dataset}/variables?sponsor_model=` | `[{variable, cdisc, label, type, length, display_format, codelist, term, core, origin, role, comment, order}]` |
+
+### Modules (API extension)
+
+- `osb_direct_client.py` — in-process service calls (`SponsorModelService`,
+  `DataModelIGService`) with the `_system_user_context()` helper.
+- `cypher.py` — `run_cypher(query, params) -> list[dict]` over `neomodel db.cypher_query`.
+- `predefine_repository.py` — the two version-aware Cypher builders (datasets, variables).
+- `models.py` — response models.
+- `elobs_pre_define_display_main.py` — router; every sibling import uses the
+  top-level fallback (see loader-contract section).
+
+### UI (single view)
+
+Study autocomplete + version dropdown → metadata card → standard autocomplete →
+datasets table (click a row to select a domain) → variables table. Study/standard
+are autocompletes; datasets are a clickable table.
+
 ## Scope
 
 **In scope**

@@ -36,15 +36,30 @@ http://localhost:8009/elobs-pre-define-display/
 
 ## API
 
-### `GET /elobs-pre-define-display/hello`
+The extension reproduces panels 3–5 of the OSB NeoDash "Pre-Define" report. Panels
+1–2 (study list, versions, metadata) are served by native OSB endpoints and consumed
+directly by the frontend.
 
-Dummy walking-skeleton endpoint.
+### `GET /elobs-pre-define-display/standards`
 
-**Response** — `application/json`:
+Sponsor models joined with the CDISC IG they extend (panel 3). In-process via
+`SponsorModelService` + `DataModelIGService`.
 
-```json
-{ "message": "hallo world" }
-```
+Returns `[{ sponsor_model, cdisc_ig, effective_date, version }]`.
+
+### `GET /elobs-pre-define-display/studies/{uid}/datasets?sponsor_model=&version=`
+
+Datasets (domains) used by the study's activities for the given sponsor model
+(panel 4). Version-aware: omit `version` for latest. Cypher via `neomodel`.
+
+Returns `[{ Dataset, Description, Class, Structure, Purpose, Keys, Documentation, Location }]`.
+
+### `GET /elobs-pre-define-display/datasets/{dataset}/variables?sponsor_model=`
+
+Variables of a dataset as defined by the sponsor model (panel 5). Cypher via
+`neomodel`. Study-version independent.
+
+Returns `[{ Variable, Cdisc, Label, Type, Length, DisplayFormat, Codelist, Term, Core, Origin, Role, Comment, Order }]`.
 
 ## Running Extension Tests
 
