@@ -1,8 +1,8 @@
 # elobs-pre-define-display
 
-OpenStudyBuilder extension that provides a read-only viewer for _[TODO: describe the predefined display data — what it is and why teams need to view it]_ directly from live study data.
+The **elobs-pre-define-display** is an OpenStudyBuilder extension that provides a read-only viewer for a define.xml (CDISC Standard) of a study located in OpenStudyBuilder using the sponsor model loaded to that.
 
-ELOBS is a new **E**xtension **L**ine for **O**penStudy**B**uilder **S**olution! This extension _[TODO: one-sentence summary of what the viewer shows and the problem it solves]_ from [OpenStudyBuilder](https://openstudybuilder.com).
+ELOBS is a new **E**xtension **L**ine for **O**penStudy**B**uilder **S**olution! This extension displays the pre version of the define.xml in [OpenStudyBuilder](https://openstudybuilder.com).
 
 _[TODO: 1–2 paragraphs of context. What predefined display data is maintained in OpenStudyBuilder (OSB), how this viewer surfaces it, and who uses it.]_
 
@@ -10,6 +10,8 @@ _[TODO: 1–2 paragraphs of context. What predefined display data is maintained 
 
 <!-- ![Extension Demonstration](./img/elobs_pre_define_display_demo.gif) -->
 _[TODO: add a demo GIF/screenshot under ./img/ and link it here]_
+
+Developed and manually tested with OpenStudyBuilder solution version 2.5.
 
 ---
 
@@ -105,7 +107,7 @@ The backend Swagger Extension API is available at `http://localhost:5005/extensi
 
 ## Acknowledgements
 
-This project is derived from the [OpenStudyBuilder Neo4j Dashboard for Pre-Define](https://github.com/NovoNordisk-OpenSource/openstudybuilder-solution/blob/v2.9.0/neo4j-mdr-db/neodash/neodash_reports/pre_define.json) by Novo Nordisk A/S and the OpenStudyBuilder extension [elobs-word-updater](https://github.com/KatjaGlassConsulting/elobs-word-updater). The original projects are licensed under the MIT License — see [NOTICES](NOTICES) for the full upstream copyright notice.
+This project is derived from the [OpenStudyBuilder Neo4j Dashboard for Pre-Define](https://github.com/NovoNordisk-OpenSource/openstudybuilder-solution/blob/v2.9.0/neo4j-mdr-db/neodash/neodash_reports/pre_define.json) by Novo Nordisk A/S and the OpenStudyBuilder extension [elobs-word-updater](https://github.com/KatjaGlassConsulting/elobs-word-updater). The original projects are licensed under the MIT License — see [NOTICE.md](NOTICE.md) for the full upstream copyright notices.
 
 This project was developed with [Claude](https://claude.ai) by Anthropic.
 

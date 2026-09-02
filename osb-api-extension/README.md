@@ -70,3 +70,15 @@ and require only `fastapi` + `pytest`):
 cd osb-api-extension
 python -m pytest elobs_pre_define_display
 ```
+
+---
+
+## License
+
+MIT — Copyright (c) 2026 Katja Glass Consulting.
+See [LICENSE](https://github.com/KatjaGlassConsulting/elobs-pre-define-display/blob/main/LICENSE) and [NOTICE.md](https://github.com/KatjaGlassConsulting/elobs-pre-define-display/blob/main/NOTICE.md).
+
+The Cypher queries in `predefine_repository.py` are derived from the
+OpenStudyBuilder NeoDash "Pre-Define" report, Copyright (C) 2022 Novo Nordisk A/S,
+MIT licensed — see the [NOTICE.md](elobs_pre_define_display/NOTICE.md) file that ships
+inside the extension folder.

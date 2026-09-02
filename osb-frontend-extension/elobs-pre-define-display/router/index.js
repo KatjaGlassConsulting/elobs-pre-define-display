@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Katja Glass Consulting
+
 import roles from '@/constants/roles'
 
 const elobsPreDefineDisplayRoute = {

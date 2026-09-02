@@ -1,8 +1,17 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 Katja Glass Consulting
+
 """Cypher-backed reads for the two study/standard-derived Pre-Define panels.
 
 Adapted from the OSB NeoDash "Pre-Define" report (panels 4 & 5). The study match
 is keyed on StudyRoot.uid and is version-aware, mirroring how OSB selects a specific
 StudyValue (LATEST vs HAS_VERSION {version}).
+
+The Cypher in this module is derived from the OpenStudyBuilder NeoDash "Pre-Define"
+report (neo4j-mdr-db/neodash/neodash_reports/pre_define.json),
+Copyright (C) 2022 Novo Nordisk A/S, Danish company registration no. 24256790,
+licensed under the MIT License. See NOTICE.md in the project root for the full
+upstream copyright notice.
 """
 from __future__ import annotations
 from typing import Any

@@ -42,3 +42,10 @@ Run code quality checks:
 yarn format
 yarn lint
 ```
+
+---
+
+## License
+
+MIT — Copyright (c) 2026 Katja Glass Consulting.
+See [LICENSE](https://github.com/KatjaGlassConsulting/elobs-pre-define-display/blob/main/LICENSE) and [NOTICE.md](https://github.com/KatjaGlassConsulting/elobs-pre-define-display/blob/main/NOTICE.md).

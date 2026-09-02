@@ -140,6 +140,9 @@
 </template>
 
 <script setup>
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Katja Glass Consulting
+
 import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { notificationHub } from '@/plugins/notificationHub'

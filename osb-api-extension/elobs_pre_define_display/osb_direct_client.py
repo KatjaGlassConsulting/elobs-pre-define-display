@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 Katja Glass Consulting
+
 """In-process reads from OSB service classes (no HTTP).
 
 Currently backs the Standards panel (sponsor models + the CDISC IG they extend).

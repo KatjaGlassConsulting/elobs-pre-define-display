@@ -32,6 +32,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 This component contains software licensed under different licenses when compiled, please refer to the sbom.md file for further information and full license texts.
 ```
 
+> The `sbom.md` file referenced above lives in the upstream `neo4j-mdr-db` folder;
+> it is not part of this repository.
+
 ## OpenStudyBuilder Extension elobs-word-updater
 
 Source: https://github.com/KatjaGlassConsulting/elobs-word-updater/tree/0.2
@@ -59,10 +62,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-This project is derived from the OpenStudyBuilder Word Add-In
-(https://github.com/NovoNordisk-OpenSource/openstudybuilder-word-addin).
-See NOTICES for the original copyright notice and license.
 ```
+
+elobs-word-updater is itself derived from the
+[OpenStudyBuilder Word Add-In](https://github.com/NovoNordisk-OpenSource/openstudybuilder-word-addin);
+see the NOTICES file in the elobs-word-updater repository for that attribution.

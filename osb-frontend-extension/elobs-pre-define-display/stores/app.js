@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Katja Glass Consulting
+
 import { i18n } from '@/plugins/i18n'
 
 export default {
