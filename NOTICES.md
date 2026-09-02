@@ -1,6 +1,9 @@
 # Third-Party Notices
 
-This project is derived from the OpenStudyBuilder Dashboard, used under the MIT License and the OSB Extension elobs-word-updater using MIT as well
+This project incorporates material from two third-party projects, both used under the MIT License:
+
+- the OpenStudyBuilder Neo4j Dashboard for Pre-Define (Novo Nordisk A/S)
+- the OpenStudyBuilder extension elobs-word-updater (Katja Glass Consulting)
 
 ---
 
@@ -29,10 +32,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 This component contains software licensed under different licenses when compiled, please refer to the sbom.md file for further information and full license texts.
 ```
 
-## OpenStudyBuilder Neo4j Dashboard for elobs-word-updater
+## OpenStudyBuilder Extension elobs-word-updater
 
-Source: https://github.com/KatjaGlassConsulting/elobs-word-updater
-Corresponding license file: https://github.com/KatjaGlassConsulting/elobs-word-updater/blob/main/LICENSE
+Source: https://github.com/KatjaGlassConsulting/elobs-word-updater/tree/0.2
+Corresponding license file: https://github.com/KatjaGlassConsulting/elobs-word-updater/blob/0.2/LICENSE
 
 ```
 MIT License
