@@ -105,7 +105,7 @@ The backend Swagger Extension API is available at `http://localhost:5005/extensi
 
 ## Acknowledgements
 
-_[TODO: acknowledgements — upstream inspiration, licensing notices, etc.]_
+This project is derived from the [OpenStudyBuilder Neo4j Dashboard on pre-define](https://github.com/NovoNordisk-OpenSource/openstudybuilder-solution/blob/v2.9.0/neo4j-mdr-db/neodash/neodash_reports/pre_define.json) by Novo Nordisk A/S and the OpenStudyBuilder extension [elobs-word-updater](https://github.com/KatjaGlassConsulting/elobs-word-updater). The original project is licensed under the MIT License — see [NOTICES](NOTICES) for the full upstream copyright notice.
 
 This project was developed with [Claude](https://claude.ai) by Anthropic.
 
@@ -113,4 +113,4 @@ This project was developed with [Claude](https://claude.ai) by Anthropic.
 
 ## License
 
-_[TODO: choose a license and add a LICENSE file. Suggested: MIT License - Copyright (c) 2026 Katja Glass Consulting.]_
+MIT License - Copyright (c) 2026 Katja Glass Consulting. See [LICENSE](LICENSE) for details.
